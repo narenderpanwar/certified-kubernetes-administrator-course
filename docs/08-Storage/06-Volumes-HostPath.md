@@ -10,16 +10,16 @@ In this section, we will take a look at **Volumes**
 - In the Kubernetes world, the PODs created in Kubernetes are transient in nature. When a POD is created to process data and then deleted, the data processed by it gets deleted as well.
 - For example, We create a simple POD that generated a random between 1 and 100 and writes that to a file at `/opt/number.out`. To persist into the volume.
 - We create a volume for that. In this case I specify a path `/data` on the host. Files are stored in the directory data on my node. We use the volumeMounts field in each container to mount the data-volume to the directory `/opt` within the container. The random number will now be written to `/opt` mount inside the container, which happens to be on the data-volume which is in fact `/data` directory on the host. When the pod gets deleted, the file with the random number still lives on the host.
-
+  
   ![class-14](../../images/class14.PNG)
 
 ## Volume Storage Options
 
-- In the volumes, hostPath volume type is fine with the single node. It's not recomended for use with the multi node cluster.
+- In the volumes, `hostPath` volume type is fine with the single node. `It's not recomended for use with the multi node cluster.`
 - In the Kubernetes, it supports several types of standard storage solutions such as NFS, GlusterFS, CephFS or public cloud solutions like AWS EBS, Azure Disk or Google's Persistent Disk.
-
+  
   ![class-15](../../images/class15.PNG)
-
+  
   ```
   volumes:
   - name: data-volume
