@@ -31,9 +31,9 @@
 5. **Master Upgrade with Kubeadm:**
    
    * Use kubeadm upgrade plan command to get information about the current cluster version, kubeadm tool version, latest stable version of Kubernetes, control plane components, and their upgrade versions.
-   * Upgrade kubeadm tool itself before upgrading the cluster.
-   * Upgrade one minor version at a time using kubeadm upgrade apply command.
-   * After upgrading control plane components, manually upgrade kubelet version on your master if you have.
+   * `Upgrade kubeadm tool itself before upgrading the cluster`.
+   * Upgrade one minor version at a time using `kubeadm upgrade apply` command.
+   * After upgrading control plane components, `manually upgrade kubelet version` on your master if you have.
      
      ![up2](../../images/clusterup2.png)
 6. **Worker Node Upgrade Process:**
@@ -46,5 +46,4 @@
    * Pods may not immediately return to the upgraded node; they come back when deleted from other nodes or new pods are scheduled.
      
      ![up2](../../images/clusterup1.png)
-     
 
