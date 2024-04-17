@@ -23,7 +23,6 @@
 - Static Pods have node name appended at the end.
   For ex - webapp-vfgd-`node01`
 
-
 ## Configure Static Pod
 
 - The designated directory can be any directory on the host and the location of that directory is passed in to the kubelet as an option while running the service.
@@ -33,7 +32,7 @@
 
 ## Another way to configure static pod
 
-- Instead of specifying the option directly in the **`kubelet.service`** file, you could provide a path to another config file using the config option, and define the directory path as staticPodPath in the file.
+- Instead of specifying the option directly in the **`kubelet.service`** file, you could provide a path to the kube-config file using the config option, and define the directory path as staticPodPath in the file.
   
   ![sp1](../../images/sp1.PNG)
 
