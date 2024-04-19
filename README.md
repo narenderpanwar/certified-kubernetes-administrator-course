@@ -85,7 +85,7 @@ These are notes from the [Certified Kubernetes Administrator Course](https://kod
   - [15.Init-Containers](docs/05-Application-Lifecycle-Management/15.Init-Containers.md)
   - [16-Practice-Test-Init-Containers](docs/05-Application-Lifecycle-Management/16-Practice-Test-Init-Containers.md)
   - [17.Self-Healing-Applications](docs/05-Application-Lifecycle-Management/17.Self-Healing-Applications.md)
-  - [18.Download-Presentation-Deck](docs/05-Application-Lifecycle-Management/18.Download-Presentation-Deck.md)
+  - [18-Liveness-Readiness-Probes](docs/05-Application-Lifecycle-Management/18-Liveness-Readiness-Probes.md)
 - [06-Cluster-Maintenance](docs/06-Cluster-Maintenance)
   
   - [01-Cluster-Maintenance-Section-Introduction](docs/06-Cluster-Maintenance/01-Cluster-Maintenance-Section-Introduction.md)
