@@ -1,8 +1,9 @@
 # Liveness & Readiness Probes:
 
-- **Liveness Probe:** Imagine you have an app running on a server. The liveness probe is like a health check for your app. It asks, "Hey, are you still alive and kicking?" It regularly checks if your app is functioning properly. If the app doesn't respond or is stuck, the liveness probe detects this and can take action, like restarting the app, to keep things running smoothly. It ensures that your app is up and running as expected.
+- **Liveness Probe:** Imagine you have an app running on a server. The liveness probe is like a health check for your app. It asks, "Hey, are you still alive and functioning?" It regularly checks if your app is functioning properly. If the app doesn't respond or is stuck, the liveness probe detects this and can take action, like restarting the app, to keep things running smoothly. It ensures that your app is up and running as expected.
 - **Readiness Probe:** Now, let's say your app needs some time to get ready after it starts up. Maybe it's loading some data or connecting to a database. The readiness probe is like asking, "Hey, are you ready to start handling requests?" It checks if your app is fully prepared to start doing its job. If the app isn't ready yet, the readiness probe holds off sending traffic to it until it is, preventing any premature requests that might cause errors. It ensures that your app is ready to handle incoming requests without any issues.
-
+  
+  ![landr](../../images/liveness-readiness.png)
   `In a nutshell, the liveness probe checks if your app is alive and functioning, while the readiness probe checks if your app is ready to handle requests. Both probes help ensure the stability and reliability of your application.`
 
 # How Kubernetes does Health checks:
@@ -50,8 +51,6 @@ These probes are configured using the `livenessProbe` and `readinessProbe` field
         initialDelaySeconds: 20
         periodSeconds: 5
   ```
-
-
 
 #### Let's break this down:
 
