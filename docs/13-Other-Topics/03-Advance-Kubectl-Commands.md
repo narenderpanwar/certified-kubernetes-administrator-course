@@ -41,6 +41,7 @@
 
 - With the queries we have built so far we were able to get different sets of information like names of nodes, the CPU counts, et cetera in this format, but this is not what we really want. We wanted to look like this one on the right. The node names in one column and CPU counts in the other.
 - This is where we use loops to iterate through items in a list and print properties of each item.
+
   ![pod](../../images/jsonpath1.png)
 - Merge it all in into a single line and pass it as a parameter to the JSONpath option of the Kubectl command.
   ![pod](../../images/jsonpath2.png)
@@ -49,7 +50,7 @@
 
 - You can also use JSONpath for printing `Custom Columns` as at times, this is an easier approach when compared to using the loop method.
   
-  - To print the output in a separate column (one column with node name and other with CPU count):
+ - To print the output in a separate column (one column with node name and other with CPU count):
     
     ```
     kubectl get nodes -o=custom-columns=NODE:.metadata.name ,CPU:.status.capacity.cpu
@@ -58,11 +59,11 @@
     ![loop](../../images/customcolumns1.png)
     ![loop](../../images/customcolumns2.png)
 
-#### Sort : 
+#### Sort :
 
 - The Kubectl command comes with a `sort by` option where you can sort the output based on the value of a property from the JSON formatted properties of each item.
   
-  - Let's combine with json path query to **`sort`** by CPU count:
+ - Let's combine with json path query to **`sort`** by CPU count:
     
     ```
     kubectl get nodes --sort-by=.metadata.name
