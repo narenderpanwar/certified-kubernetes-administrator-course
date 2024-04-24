@@ -1,4 +1,4 @@
-# OSI Model - Workflow
+# OSI Model - Workflo
 
 1. **Layer 7 - Application Layer**: The user opens their web browser and types "Google.com" into the address bar. At this layer, the browser initiates communication with the remote server and makes a request for the web page.
 2. **Layer 6 - Presentation Layer**: The browser formats the request in a way that is understandable by both the client (browser) and the server. This layer deals with data translation and encryption if necessary.
