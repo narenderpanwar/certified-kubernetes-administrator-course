@@ -13,7 +13,7 @@ In this section, we will take a look at kube-proxy.
 - Thats where Kube Proxy comes into the picture.
 - Kube-Proxy is a process that runs on each node in the kubernetes cluster.
   It's job is to look for new services, and everytime a new service is created,
-  **It creates an appropriate rule in each node to forward traffic to those Services to the backend pods.** , allowing the communication between different pods across the cluster.
+  **It creates an appropriate rule in each node to forward traffic to those Services to the backend pods**, allowing the communication between different pods across the cluster.
   
   ![kube-proxy](../../images/kube-proxy.PNG)
 - We can see the Ip rules using the below command:
