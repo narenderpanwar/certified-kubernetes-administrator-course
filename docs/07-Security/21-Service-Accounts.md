@@ -18,7 +18,7 @@
 - For example, using curl, you could provide the bearer token as an authorization header while making a REST call to the Kubernetes API.
   ![sa](../../images/sa3.png)
 
---- 
+---
 
 Important Note:
 
@@ -75,9 +75,27 @@ Note : Remember that the default service account is very much restricted. It onl
    
    - Sometimes, pods need to interact with external services or APIs.
    - Service accounts can be used to securely manage authentication credentials required for these interactions, reducing the risk of exposing sensitive information.
-   
-   e. **Application-specific Access Control**:
-   
-   - Different applications running in pods may have varying access requirements within the cluster.
-   - By using different service accounts with tailored permissions for each application, you can enforce least privilege principles and enhance security.
+   - To provide access to a Pod running in AWS EKS (Elastic Kubernetes Service) to access an S3 bucket, you typically use IAM roles and IAM policies. Here's a general overview of the steps involved:
+     - ​**Create an IAM Role**​: You'll need to create an IAM role that your EKS cluster can assume. This role will have permissions to access the S3 bucket.
+     - **Attach Policies to the IAM Role**​: Attach the necessary policies to the IAM role to grant permissions for accessing the S3 bucket. The policies should include permissions for the specific actions (e.g., `s3:GetObject`, `s3:PutObject`) on the target S3 bucket or resources.
+     - **Update Kubernetes Service Account**​: Update the Kubernetes service account associated with your Pod or Pods to use the IAM role you created. This is typically done by annotating the service account with the ARN (Amazon Resource Name) of the IAM role.
+     - **Use AWS SDK or CLI in Your Application**​: In your application code running inside the Pod, you can use the AWS SDK (such as AWS SDK for Go, AWS SDK for Python, etc.) or AWS CLI to interact with the S3 bucket. The SDK or CLI will automatically pick up the IAM role credentials associated with the EC2 instance running your Pod.
+
+- Here's an example of how you can annotate a Kubernetes service account with the IAM role ARN:
+
+  ```
+  apiVersion:
+  kind: ServiceAccount
+  metadata:
+    name: my-service-account
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::123456789012:role/eks-s3-access-role
+  ```
+
+- Keep in mind that IAM roles for service accounts (IRSA) is a feature provided by EKS, which simplifies this process by allowing you to associate an IAM role directly with a Kubernetes service account. This eliminates the need for manual annotation.
+
+e. **Application-specific Access Control**:
+
+- Different applications running in pods may have varying access requirements within the cluster.
+- By using different service accounts with tailored permissions for each application, you can enforce least privilege principles and enhance security.
 
