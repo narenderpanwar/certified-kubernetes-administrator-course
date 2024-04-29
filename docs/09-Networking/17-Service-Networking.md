@@ -5,7 +5,7 @@
 * We previously explored pod networking and learnt how bridge networks get created on each node.
 * Pods are allocated a namespace with attached interfaces.
 * `Pods receive IP addresses from a subnet assigned to their respective nodes`.
-* Routes and otehr overlay techniques enable pods on various nodes to communicate, forming a large virtual network.
+* Routes and other overlay techniques enable pods on various nodes to communicate, forming a large virtual network.
 
 ### Services vs. Pods for Communication
 
