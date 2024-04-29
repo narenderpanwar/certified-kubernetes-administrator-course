@@ -77,16 +77,14 @@
 #### How would you delete 500TB of data from S3 quickly and efficiently?
 
 - To delete an AWS S3 bucket with 500TB of data, the fastest and most cost-effective solution would be to use the S3 Lifecycle configuration.
-
 - The S3 Lifecycle configuration can be used to automate the deletion of objects based on their age or version. By setting up a Lifecycle policy to expire objects in the bucket, you can gradually delete the contents of the bucket over time or in specified timeframe.
 - Here is a step-by-step guide to help you:
-
+  
   1. Log in to the AWS Management Console and navigate to the S3 bucket you want to delete.
   2. Open the "Lifecycle" configuration tab for the bucket.
   3. Create a new lifecycle policy, and set the expiration rules to delete objects that are over a certain age or version.
   4. Set the expiration period to a time frame that makes sense for your data, such as 1day, 2day or 7 days.
   5. Save the policy and apply it to the bucket.
-
 - With this policy in place, S3 will automatically delete the objects that meet the expiration criteria, and you can gradually reduce the size of the bucket over time. This is a more cost-effective, less time-consuming and stress-less approach as amazon takes care of running this process rather than manually deleting all of the objects at once as manual processes can break in middle for many reasons.
 
 # Question 4:
@@ -101,7 +99,6 @@
 # Question 5:
 
 #### What Load Balancer would you suggest to a Developer?
-
 
 **ALB (Application Load Balancer):**
 
@@ -120,4 +117,42 @@
 In general, if you're dealing with HTTP or HTTPS traffic and need more advanced routing capabilities, ALB would be a better choice. If your application requires handling TCP traffic at scale with low latency or needs static IP addresses, NLB might be the better option.
 
 Consider your specific requirements, such as the type of traffic your application will handle, scalability needs, and whether you require advanced routing features, to make an informed decision between ALB and NLB.
+
+# Question 6:
+
+#### How can an EC2 instance in Account 1 access S3 of Account 2?
+
+To allow an EC2 instance in one AWS account to access S3 buckets in another AWS account, you typically need to set up cross-account IAM roles and policies. Here's a general outline of the steps involved:
+
+1. **Create an IAM Role in the Account with the S3 Bucket (Account 2)**:
+   
+   - In the AWS Management Console, navigate to the IAM service.
+   - Create a new IAM role with permissions to access the S3 bucket. This role will be assumed by the EC2 instance in Account 1.
+   - Attach a policy to this role that grants the necessary permissions to access the S3 bucket. This policy should specify the actions allowed on the S3 bucket and any resources it contains.
+2. **Define a Trust Relationship for the IAM Role**:
+   
+   - Edit the trust relationship of the IAM role created in Step 1 to trust the AWS account ID of the account where the EC2 instance resides (Account 1). The trust relationship should specify the principal as the EC2 service in Account 1.
+
+    ```json
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {
+            "AWS": "arn:aws:iam::ACCOUNT-ID-OF-EC2-INSTANCE:root"
+          },
+          "Action": "sts:AssumeRole"
+        }
+      ]
+    }
+    ```
+
+3. **Assign an IAM Role to the EC2 Instance**:
+   
+   - Assign the IAM role created in Step 1 to the EC2 instance. This allows the instance to assume the permissions defined in the IAM role.
+4. **Access S3 from the EC2 Instance**:
+   
+   - Use the AWS SDK or CLI with appropriate credentials to access the S3 bucket in Account 2. The SDK or CLI will automatically use the IAM role attached to the EC2 instance for authentication and authorization.
+
 
