@@ -1,4 +1,4 @@
-# Pre-requisite Switching Routing Gateways
+# Pre-requisite: Switching, Routing & Gateways
 
 This lecture series covers basic networking concepts, including switching, routing, gateways, DNS, CoreDNS, and network namespaces in Linux. It is intended for system administrators and application developers who need to understand networking fundamentals but may not be network engineers.
 
