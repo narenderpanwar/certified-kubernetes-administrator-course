@@ -61,7 +61,7 @@
     },
     {
       "Sid": "AllowPutObject",
-      "Effect": "Allow",
+      "Effect": "Deny",
       "Principal": {
         "AWS": "arn:aws:iam::123456789012:user/example-user"
       },
@@ -70,10 +70,5 @@
     }
   ]
 }
-
 ```
-
-
-
-
 
