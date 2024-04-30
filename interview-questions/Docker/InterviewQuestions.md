@@ -14,6 +14,4 @@
     - `ENTRYPOINT ["ls","-a"]`
     - `CMD ["-l"]`
     - Command executed: `ls -a -S`
-- In Case 1, when no argument is passed from the CLI, the command `ls -l` is executed, where `-l` is provided by the CMD.
-- In Case 2, when the argument `-S` is passed from the CLI, it is appended to the ENTRYPOINT command `ls -a`, resulting in the command `ls -a -S`. The CMD part (`-l`) remains unchanged.
 
