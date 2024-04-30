@@ -148,3 +148,60 @@ To allow an EC2 instance in one AWS account to access S3 buckets in another AWS 
   1. **Allow then Deny (Rule 1 Allow, Rule 2 Deny):** In this case, the IP would be allowed by Rule 1, and the traffic from that IP would be permitted. Rule 2 would never be evaluated for this IP because the evaluation stops once a matching rule is found.
   2. **Deny then Allow (Rule 1 Deny, Rule 2 Allow):** If the IP is denied by Rule 1, it would be blocked regardless of what Rule 2 says. Rule 2 wouldn't be evaluated for this IP because the evaluation stops once a matching rule is found.
 
+# Question 8:
+
+#### How to Upgrade RDS Engine version with Zero Downtime?
+
+#### **With Zero Downtime Using AWS DMS:**
+
+1. Create parameter group for MySQL 8 version
+
+    - Create a new parameter group for MySQL 8.0 version.
+    - Ensure that the parameter group is compatible with the MySQL 8.0 engine.
+    - Configure the necessary parameters in the parameter group as per your application requirements.
+    - Associate the new parameter group with the MySQL 8.0 RDS instance.
+
+ 2. Create a read replica of MySQL 5.7 master RDS instance
+
+
+
+    - Create a read replica of the existing MySQL 5.7 master RDS instance.
+    - Ensure that the read replica is configured with the same database engine version (5.7) as the master.
+    - Monitor the replication lag between the master and the read replica to ensure that the replica is in sync.
+
+3. When the replica is in sync (lag is 0) start the upgrade process
+
+    - Verify that the read replica is in sync with the master by checking the replication lag.
+    - Once the lag is 0, you can proceed with the upgrade process.
+
+4. Upgrade the read replica to MySQL 8.0.31 and enable backups as we need to create read replicas of this instance
+
+
+    - Upgrade the read replica to MySQL 8.0.31 version.
+    - During the upgrade process, ensure that the new parameter group for MySQL 8.0 is associated with the upgraded read replica.
+    - Enable automated backups for the upgraded read replica instance to facilitate the creation of additional read replicas.
+
+5. Create second-level replicas of upgraded MySQL 8 read replicas
+
+    - Create additional read replicas of the upgraded MySQL 8.0.31 read replica instance.
+    - These second-level read replicas will inherit the MySQL 8.0.31 version and the associated parameter group.
+    - Monitor the replication lag between the upgraded read replica and its second-level replicas to ensure they remain in sync.
+
+6. Promote the upgraded replica to a master
+   
+   - Once the upgrade process is complete and the read replicas are in sync, you can promote the upgraded read replica to become the new master instance.
+   - This will make the upgraded MySQL 8.0.31 instance the new primary database, and the second-level read replicas will now replicate from this new master.
+   - Ensure that any applications or services that were connected to the previous MySQL 5.7 master are now updated to connect to the new MySQL 8.0.31 master instance.
+
+#### **With Minimal Downtime:**
+
+* RDS Blue/Green Deployments help make and test database changes before implementing them in a production environment.
+* RDS Blue/Green Deployment has the blue environment as the current production environment and the green environment as the staging environment.
+* RDS Blue/Green Deployment creates a staging or green environment that exactly copies the production environment.
+* Green environment is a copy of the topology of the production environment and includes the features used by the DB instance including the Multi-AZ deployment, read replicas, the storage configuration, DB snapshots, automated backups, Performance Insights, and Enhanced Monitoring.
+* Green environment or the staging environment always stays in sync with the current production environment using logical replication.
+* RDS DB instances in the green environment can be changed without affecting production workloads. Changes can include the upgrade of major or minor DB engine versions, upgrade of underlying file system configuration, or change of database parameters in the staging environment.
+* Changes can be thoroughly tested in the green environment and when ready, the environments can be switched over to promote the green environment to be the new production environment.
+* Switchover typically takes under a minute with no data loss and no need for application changes.
+* Blue/Green Deployments are currently supported only for RDS for MariaDB, MySQL, and PostgreSQL
+
