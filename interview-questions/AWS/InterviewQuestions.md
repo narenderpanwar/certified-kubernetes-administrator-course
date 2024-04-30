@@ -132,27 +132,35 @@ To allow an EC2 instance in one AWS account to access S3 buckets in another AWS 
 2. **Define a Trust Relationship for the IAM Role**:
    
    - Edit the trust relationship of the IAM role created in Step 1 to trust the AWS account ID of the account where the EC2 instance resides (Account 1). The trust relationship should specify the principal as the EC2 service in Account 1.
-
-    ```json
-    {
-      "Version": "2012-10-17",
-      "Statement": [
-        {
-          "Effect": "Allow",
-          "Principal": {
-            "AWS": "arn:aws:iam::ACCOUNT-ID-OF-EC2-INSTANCE:root"
-          },
-          "Action": "sts:AssumeRole"
-        }
-      ]
-    }
-    ```
-
+   
+   ```json
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Effect": "Allow",
+         "Principal": {
+           "AWS": "arn:aws:iam::ACCOUNT-ID-OF-EC2-INSTANCE:root"
+         },
+         "Action": "sts:AssumeRole"
+       }
+     ]
+   }
+   ```
 3. **Assign an IAM Role to the EC2 Instance**:
    
    - Assign the IAM role created in Step 1 to the EC2 instance. This allows the instance to assume the permissions defined in the IAM role.
 4. **Access S3 from the EC2 Instance**:
    
    - Use the AWS SDK or CLI with appropriate credentials to access the S3 bucket in Account 2. The SDK or CLI will automatically use the IAM role attached to the EC2 instance for authentication and authorization.
+
+# Question 7:
+
+#### What would happen if you allow an IP in Rule 1 of NACL and then deny that same IP in Rule 2?
+
+- In a Network Access Control List (NACL), rules are evaluated in order, starting from the lowest number and moving to the highest. Once a matching rule is found, further rule evaluation stops.
+
+  1. **Allow then Deny (Rule 1 Allow, Rule 2 Deny):** In this case, the IP would be allowed by Rule 1, and the traffic from that IP would be permitted. Rule 2 would never be evaluated for this IP because the evaluation stops once a matching rule is found.
+  2. **Deny then Allow (Rule 1 Deny, Rule 2 Allow):** If the IP is denied by Rule 1, it would be blocked regardless of what Rule 2 says. Rule 2 wouldn't be evaluated for this IP because the evaluation stops once a matching rule is found.
 
 
