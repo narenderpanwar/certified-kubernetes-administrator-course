@@ -1,6 +1,6 @@
 ## Persistent Volumes, Persistent Volume Claims, and Storage Classes in Kubernetes
 
-### Challenges of Storing Data in Pods
+### Challenges of Storing Data in Pods & Nodes
 
 * **Pod restarts:** When a pod restarts, any data stored locally within the pod is lost.
 * **Pod rescheduling:** Pods can be rescheduled to different nodes in the cluster due to various reasons (e.g., scaling, node failure). Local storage on the original node wouldn't be accessible to the rescheduled pod.
