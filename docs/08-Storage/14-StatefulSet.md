@@ -48,6 +48,7 @@
 - If we increase the replias to 3 now, the statefulset will create a pod with mysql-1 name, clones the data from mysql-0 pod and keeps the hostname of mysql-0 into it as centralized hostname so that it can connect to it and replicate the data from it.
   ![state](../../images/statefulset8.png)
 - Once the pod mysql-1 completes all these tasks and comes in ready state, Statefulset will deploy another pod mysql-2 which will copy the data from mysql-1 pod and keep the hostname of mysql-0 for future replications.
-
+  
   ![state](../../images/statefulset6.png)
+- If the StatefulSet needs to scale down the Pods, It will delete the pods in reverse order like mysql-2 will be deleted first then mysql-1 and so on.
 
