@@ -30,7 +30,6 @@
 ## StatefulSets:
 
 - To resolve the above problems, we have Statefulsets in kubernetes that has the following features:
-
 - **Stable Identity**:
   Every pod managed by a StatefulSet gets a unique and stable identifier, usually in the form of an ordinal index (e.g., web-0, web-1, web-2). This identity remains consistent even if the pod is deleted and recreated.
 - **Ordered Deployment**:
@@ -41,6 +40,14 @@
   By default, StatefulSets automatically create a DNS record for each pod, allowing other services to discover and connect to individual pods directly. This is useful for applications like databases where each pod might have its own IP address and need to be addressed individually.
 - **Updating Pods**:
   When updating a StatefulSet, pods are updated in a rolling fashion, similar to Deployments. However, StatefulSets ensure that each pod is updated one at a time, maintaining the order and identity of the pods throughout the update process.
-- **Scaling**:
-  StatefulSets support both horizontal and vertical scaling. Horizontal scaling involves increasing or decreasing the number of replicas (pods), while vertical scaling involves adjusting the resources (CPU, memory) allocated to each pod.
+
+#### Lets see how these features are solving the problems we faced earlier:
+
+- Let's say we have told out applciation to use the pod mysql-0 for write operations using its hostname.
+  ![state](../../images/statefulset5.png)
+- If we increase the replias to 3 now, the statefulset will create a pod with mysql-1 name, clones the data from mysql-0 pod and keeps the hostname of mysql-0 into it as centralized hostname so that it can connect to it and replicate the data from it.
+  ![state](../../images/statefulset8.png)
+- Once the pod mysql-1 completes all these tasks and comes in ready state, Statefulset will deploy another pod mysql-2 which will copy the data from mysql-1 pod and keep the hostname of mysql-0 for future replications.
+
+  ![state](../../images/statefulset6.png)
 
