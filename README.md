@@ -145,6 +145,7 @@ These are notes from the [Certified Kubernetes Administrator Course](https://kod
   - [11-Download-Presentation-Deck](docs/08-Storage/11-Download-Presentation-Deck.md)
   - [12-Storage-Class](docs/08-Storage/12-Storage-Class.md)
   - [13-Practice-Test-Storage-Class](docs/08-Storage/13-Practice-Test-Storage-Class.md)
+  - [14-StatefulSet](docs/08-Storage/14-StatefulSet.md)
 - [09-Networking](docs/09-Networking)
   
   - [01-Networking-Introduction](docs/09-Networking/01-Networking-Introduction.md)
