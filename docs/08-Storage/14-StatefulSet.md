@@ -18,4 +18,12 @@
   - Obviosly the traffic from web pod will go through the service of the database, and this service can route traffic to any of the backend database pods randomly.
     ![state](../../images/statefulset3.png)
   - This means that data can we written in any pod and read from any other pod. This is the biggest problem of Data inconsistency.
+  - There must be something like-
+    ![state](../../images/statefulset4.png)
+    
+    - A centralized pod where application writes data to this pod only.
+    - Rest all pods should replicate the data from this pod.
+    - Problems:
+      - How do we tell the application that, say Pod01 is to be used for only write operations? A pod's IP gets changed if recreated and there is no proper DNS assigned for Pods.
+      - How do we tell the other pods to replicate the data from the Pod01?
 
