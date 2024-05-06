@@ -31,22 +31,16 @@
 
 - To resolve the above problems, we have Statefulsets in kubernetes that has the following features:
 
-  1. **Stable Identity**:
-   
-   - Every pod managed by a StatefulSet gets a unique and stable identifier, usually in the form of an ordinal index (e.g., web-0, web-1, web-2). This identity remains consistent even if the pod is deleted and recreated.
-  2. **Ordered Deployment**:
-   
-   - StatefulSets ensure that pods are deployed and scaled in a predictable order. This means that pods are created one by one, and each pod is not started until the previous one is running and ready.
-  3. **Persistent Storage**:
-   
-   - StatefulSets are designed to work well with stateful applications that require persistent storage. They can automatically provision and attach persistent volumes to each pod in a consistent and predictable manner.
-  4. **Headless Service**:
-   
-   - By default, StatefulSets automatically create a DNS record for each pod, allowing other services to discover and connect to individual pods directly. This is useful for applications like databases where each pod might have its own IP address and need to be addressed individually.
-  5. **Updating Pods**:
-   
-   - When updating a StatefulSet, pods are updated in a rolling fashion, similar to Deployments. However, StatefulSets ensure that each pod is updated one at a time, maintaining the order and identity of the pods throughout the update process.
-  6. **Scaling**:
-   
-   - StatefulSets support both horizontal and vertical scaling. Horizontal scaling involves increasing or decreasing the number of replicas (pods), while vertical scaling involves adjusting the resources (CPU, memory) allocated to each pod.
+- **Stable Identity**:
+  Every pod managed by a StatefulSet gets a unique and stable identifier, usually in the form of an ordinal index (e.g., web-0, web-1, web-2). This identity remains consistent even if the pod is deleted and recreated.
+- **Ordered Deployment**:
+  StatefulSets ensure that pods are deployed and scaled in a predictable order. This means that pods are created one by one, and each pod is not started until the previous one is running and ready.
+- **Persistent Storage**:
+  StatefulSets are designed to work well with stateful applications that require persistent storage. They can automatically provision and attach persistent volumes to each pod in a consistent and predictable manner.
+- **Headless Service**:
+  By default, StatefulSets automatically create a DNS record for each pod, allowing other services to discover and connect to individual pods directly. This is useful for applications like databases where each pod might have its own IP address and need to be addressed individually.
+- **Updating Pods**:
+  When updating a StatefulSet, pods are updated in a rolling fashion, similar to Deployments. However, StatefulSets ensure that each pod is updated one at a time, maintaining the order and identity of the pods throughout the update process.
+- **Scaling**:
+  StatefulSets support both horizontal and vertical scaling. Horizontal scaling involves increasing or decreasing the number of replicas (pods), while vertical scaling involves adjusting the resources (CPU, memory) allocated to each pod.
 
