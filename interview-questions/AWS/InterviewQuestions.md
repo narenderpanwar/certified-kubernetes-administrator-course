@@ -213,3 +213,8 @@ To allow an EC2 instance in one AWS account to access S3 buckets in another AWS 
    `mountpoint /test/`
    Output : /test is a mountpoint
 
+To automatically mount a directory on instance startup, you need to make an entry in the `/etc/fstab` file:
+
+`sudo nano /etc/fstab`
+`/dev/xvdf /test ext4 defaults 0 2`
+
