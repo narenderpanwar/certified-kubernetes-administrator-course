@@ -197,3 +197,19 @@ To allow an EC2 instance in one AWS account to access S3 buckets in another AWS 
 * Switchover typically takes under a minute with no data loss and no need for application changes.
 * Blue/Green Deployments are currently supported only for RDS for MariaDB, MySQL, and PostgreSQL
 
+# Question 9:
+
+#### How to use an EBS Volume once it is attached?
+
+1) To list all the attached volumes
+   `lsblk`
+2) Format
+   `mkfs.ext4 /dev/<volumeName>`  (In linux all the volumes are under /dev/ directory)
+3) Create a directory that is to be mounted i.e whatever we write in this directory will go into that EBS volume.
+   `mkdir test`
+4) Mount
+   `mount /dev/xvdf` `/test/`
+5) To check if mounted succesfully
+   `mountpoint /test/`
+   Output : /test is a mountpoint
+
