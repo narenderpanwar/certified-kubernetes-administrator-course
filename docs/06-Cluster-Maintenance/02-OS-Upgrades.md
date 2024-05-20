@@ -41,7 +41,125 @@
      ```
      kubectl cordon node01
      ```
-6. ​**Impact on Pod Placement**​:
+6. **Impact on Pod Placement**:
    
    - It's important to note that pods moved to other nodes during maintenance don't automatically return to the original node when it comes back online. They will stay on the new node unless explicitly deleted or recreated.
+
+# Kubernetes Kubeadm Cluster Upgrade Steps:
+
+This document outlines the steps to upgrade a Kubernetes cluster using `kubeadm`. The example version used for the upgrade is `v1.19.0`. Adjust the version numbers according to your requirements.
+
+
+## Upgrade Control Plane Node
+
+### Step 1: Check Current Nodes Status
+
+```sh
+kubectl get nodes
+```
+
+### Step 2: Drain the Control Plane Node
+
+```sh
+kubectl drain controlplane --ignore-daemonsets
+```
+
+### Step 3: Update Package Lists
+
+```sh
+apt update
+```
+
+### Step 4: Install the Desired Version of `kubeadm`
+
+Replace `<version you want to upgrade to>` with the desired version number (e.g., `1.19.0`).
+
+```sh
+apt install kubeadm=<version you want to upgrade to>.0-00
+```
+
+### Step 5: Apply the Upgrade Using `kubeadm`
+
+Replace `v1.19.0` with the desired version number.
+
+```sh
+kubeadm upgrade apply v1.19.0
+```
+
+### Step 6: Install the Desired Version of `kubelet`
+
+```sh
+apt install kubelet=1.19.0-00
+```
+
+### Step 7: Restart `kubelet`
+
+```sh
+systemctl restart kubelet
+```
+
+### Step 8: Verify Node Status
+
+```sh
+kubectl get nodes
+```
+
+### Step 9: Uncordon the Control Plane Node
+
+```sh
+kubectl uncordon controlplane
+```
+
+## Upgrade Worker Node
+
+### Step 1: Drain the Worker Node
+
+```sh
+kubectl drain node01 --ignore-daemonsets
+```
+
+### Step 2: SSH into the Worker Node
+
+```sh
+ssh node01
+```
+
+### Step 3: Update Package Lists on Worker Node
+
+```sh
+apt update
+```
+
+### Step 4: Upgrade the Node Using `kubeadm`
+
+```sh
+kubeadm upgrade node
+```
+
+### Step 5: Install the Desired Version of `kubelet` on Worker Node
+
+```sh
+apt install kubelet=1.19.0-00
+```
+
+### Step 6: Restart `kubelet` on Worker Node
+
+```sh
+systemctl restart kubelet
+```
+
+### Step 7: Verify Node Status
+
+Return to the control plane node and check the status of the nodes:
+
+```sh
+kubectl get nodes
+```
+
+### Step 8: Uncordon the Worker Node
+
+```sh
+kubectl uncordon node01
+```
+
 
