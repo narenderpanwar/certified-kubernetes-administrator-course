@@ -23,7 +23,6 @@ So far in this course we have created **`Objects`** such as **`PODs`**, **`Deplo
   
   ![ns8](../../images/ns8.PNG)
 
-
 ```
 $ kubectl create -f pod-definition.yaml
 ```
@@ -52,7 +51,6 @@ spec:
     image: nginx
 ```
 
-
 - To create a new namespace, create a namespace definition as shown below and then run **`kubectl create`**
 
 ```
@@ -72,14 +70,14 @@ Another way to create a namespace
 $ kubectl create namespace dev
 ```
 
------------------------
+---
 
-What if a frontend pod in `dev` namespace needs to communicate with a backend pod in another namespace say `prod`?
+#### What if a frontend pod in `dev` namespace needs to communicate with a backend pod in another namespace say `prod`?
 
 - We can use Kubernetes DNS-based service discovery to access services across namespaces. When you create a service for the backend pod, you can access it from the frontend pod using the service name as a DNS entry.
 - For example, if your backend service is named `backend-svc`in the`prod`namespace, the frontend pod can access it using`backend-svc.prod.svc.cluster.local`.
 
-----------------------
+---
 
 ![ns11](../../images/ns11.PNG)
 
@@ -115,7 +113,6 @@ spec:
 ```
 $ kubectl create -f compute-quota.yaml
 ```
-
 
 ![ns13](../../images/ns13.PNG)
 
