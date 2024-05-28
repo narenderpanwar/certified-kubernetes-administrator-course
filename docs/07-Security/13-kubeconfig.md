@@ -23,14 +23,60 @@ In this section, we will take a look at kubeconfig in kubernetes
   - Clusters : This section contains information about the various Kubernetes clusters that you need access to.
   - Users : These are the user accounts with which you have access to these clusters.
     For example, the admin user, a dev user, a prod user, etc. These users may have different privileges on different clusters.
-  - Contexts : Contexts define which user account will be used to access which cluster.
-    
-    ![kc4](../../images/kc4.PNG)
-    So how does it fit into our example?
-    The server specification in our command goes into the cluster section. The admin user's keys and certificates goes into the user section.
-    You then create a context that specifies to use the my kube admin user to access the my kube playground cluster.
-    
-    ![kc5](../../images/kc5.PNG)
+
+
+  - **Service Accounts**: These are Kubernetes-managed accounts used for processes running inside pods. They are created within namespaces and can be referenced in the `kubeconfig` using a token. Example:
+  
+  ```yaml
+  users:
+  - name: my-service-account
+    user:
+      token: <service-account-token>
+  ```
+- **Static Credentials**: These can be simple username/password pairs for basic authentication. Example:
+  
+  ```yaml
+  users:
+  - name: admin
+    user:
+      username: admin
+      password: secret
+  ```
+- **Client Certificates**: These use TLS certificates for authentication. Example:
+  
+  ```yaml
+  users:
+  - name: my-user
+    user:
+      client-certificate: /path/to/client.crt
+      client-key: /path/to/client.key
+  ```
+- **External Identity Providers**: These use tokens from external systems like OIDC (OpenID Connect), LDAP, or other SSO providers. Example:
+  
+  ```yaml
+  users:
+  - name: oidc-user
+    user:
+      auth-provider:
+        name: oidc
+        config:
+          client-id: my-client-id
+          client-secret: my-client-secret
+          id-token: <id-token>
+          refresh-token: <refresh-token>
+          idp-issuer-url: https://issuer.example.com
+  ```
+
+
+
+- Contexts : Contexts define which user account will be used to access which cluster.
+  
+  ![kc4](../../images/kc4.PNG)
+  So how does it fit into our example?
+  The server specification in our command goes into the cluster section. The admin user's keys and certificates goes into the user section.
+  You then create a context that specifies to use the my kube admin user to access the my kube playground cluster.
+  
+  ![kc5](../../images/kc5.PNG)
 - To view the current kubeconfig file that is being used:
   
   ```
