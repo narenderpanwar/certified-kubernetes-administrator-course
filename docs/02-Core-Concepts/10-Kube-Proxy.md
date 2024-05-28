@@ -8,7 +8,7 @@ In this section, we will take a look at kube-proxy.
 - The Web App can now access the Database using Service name **db** or its IP.
 - The Service also get assigned an IP address. So whenever a Pod tries to reach the service using its name or IP, It forwards the traffic to backend Pod, Database pod in this case.
 - **But what is this Service and how does it get an IP? Does the Service join the same pod network?**
-- The Service cannot join the pod network as it is not an actual thing. It is a virtual component that lives in kubernetes memory. But then we said, the Service should be accessible accross the cluster from any Nodes.
+- The Service cannot join the pod network as it is not an actual thing. It is a virtual component that lives in kubernetes memory. But then we said, **the Service should be accessible accross the cluster from any Nodes.**
   So that how is that achieved?
 - Thats where Kube Proxy comes into the picture.
 - Kube-Proxy is a process that runs on each node in the kubernetes cluster.
