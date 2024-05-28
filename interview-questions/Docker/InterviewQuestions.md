@@ -15,3 +15,15 @@
     - `CMD ["-l"]`
     - Command executed: `ls -a -S`
 
+# Question 2:
+
+#### Real time challenges with Docker?
+
+![iq](../../images/dockeriq.png)
+
+# Question 3:
+
+#### What steps would to take to secure containers?
+
+![iq](../../images/dockeriq1.png)
+
