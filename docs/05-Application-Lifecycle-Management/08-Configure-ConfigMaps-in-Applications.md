@@ -3,13 +3,13 @@
 - Take me to [Video Tutorial](https://kodekloud.com/topic/configure-configmaps-in-applications/)
 - In the previous lecture, we saw how to define environment variables In a pod definition file. When you have a lot of pod definition files, it will become difficult to manage the environment data stored within the query's files.
 - We can take this information out of the pod definition file and manage it centrally using config maps.
-- Also, biggest advantage of using ConfigMaps over Env in Pod definition file is, `ConfigMaps allow us to update configurations dynamically without restarting the pod.` This is important in scenarios where we need to change configurations frequently or where we want to avoid the downtime.
+- Also, `biggest advantage of using ConfigMaps over Env in Pod definition file is, ConfigMaps allow us to update configurations dynamically without restarting the pod.` This is important in scenarios where we need to change configurations frequently or where we want to avoid the downtime.
 
 ## ConfigMaps
 
 - There are 2 phases involved in configuring ConfigMaps.
   - First, create the configMaps
-  - Second, Inject then into the pod.
+  - Second, Inject them into the pod.
 - There are 2 ways of creating a configmap.
   - The Imperative way
     
