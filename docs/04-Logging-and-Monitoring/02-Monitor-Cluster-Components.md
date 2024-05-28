@@ -17,7 +17,16 @@ In this section, we will take a look at monitoring kubernetes cluster
 1. **Resource Monitoring**: Metrics Server collects resource usage metrics from every node in the cluster, providing insights into how resources such as CPU and memory are being utilized by pods and nodes.
 2. **Autoscaling**: Kubernetes Horizontal Pod Autoscaler (HPA) relies on Metrics Server to automatically scale the number of pods in a deployment or replica set based on resource utilization metrics. For example, if CPU usage exceeds a certain threshold, HPA can dynamically increase the number of pod replicas to handle the load.
 
-![hpms](../../images/hpms.PNG)
+  ![hpms](../../images/hpms.PNG)
+
+---
+
+The **`kubectl top nodes`** and **`kubectl top pods`** commands do rely on having Metrics Server installed in the Kubernetes cluster. Without Metrics Server, these commands will not work as intended. They rely on Metrics Server to collect resource usage data from nodes and pods and provide it in a format that can be queried using `kubectl`.
+If the Metrics Server is not installed, attempting to use these commands will likely result in an error indicating that the metrics are not available. Therefore, it's essential to have Metrics Server deployed in your Kubernetes cluster if you intend to use these commands for monitoring resource usage.
+
+---
+
+
 
 ## Metrics Server
 
@@ -26,6 +35,7 @@ In this section, we will take a look at monitoring kubernetes cluster
 #### How are the metrics generated for the PODs on these nodes?
 
 ![ca](../../images/ca.PNG)
+
 
 ## Metrics Server - Getting Started
 
@@ -57,6 +67,7 @@ In this section, we will take a look at monitoring kubernetes cluster
   The **`kubectl top nodes`** and **`kubectl top pods`** commands do rely on having Metrics Server installed in the Kubernetes cluster. Without Metrics Server, these commands will not work as intended. They rely on Metrics Server to collect resource usage data from nodes and pods and provide it in a format that can be queried using `kubectl`.
   If the Metrics Server is not installed, attempting to use these commands will likely result in an error indicating that the metrics are not available. Therefore, it's essential to have Metrics Server deployed in your Kubernetes cluster if you intend to use these commands for monitoring resource usage.
 
- -------------
+---
+
 ![view](../../images/view.PNG)
 
