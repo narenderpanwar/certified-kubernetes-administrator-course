@@ -218,3 +218,10 @@ To automatically mount a directory on instance startup, you need to make an entr
 `sudo nano /etc/fstab`
 `/dev/xvdf /test ext4 defaults 0 2`
 
+# Question 10:
+
+#### Can we attach a single certificate to multiple domains? OR Can we attach multiple certificates to a single domain?
+
+1. **Single certificate for multiple domains:** A SAN (Subject Alternative Name) certificate can secure multiple domains such as `example.com`, `example.net`, and `example.org` within one certificate.
+2. **Multiple certificates for a single domain:** A domain like `example.com` can have different certificates for `www.example.com` and `api.example.com` or can utilize separate certificates for different encryption types like RSA & ECC.
+
