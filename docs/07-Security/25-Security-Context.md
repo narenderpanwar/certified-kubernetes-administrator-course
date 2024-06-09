@@ -12,6 +12,51 @@
 
 ## Security Context in Kubernetes
 
+- In Kubernetes, the `securityContext` field is used to specify security settings for a Pod or Container. Within the `securityContext`, you can define which Linux capabilities are added or dropped from the default set.
+
+- In the context of Kubernetes (k8s) security, `SYS_TIME` and `MAC_ADMIN` refer to specific Linux capabilities.
+- Capabilities in Linux are a fine-grained way of assigning specific privileges to processes, as opposed to the traditional all-or-nothing superuser (root) privileges.
+- Kubernetes leverages these Linux capabilities to manage the permissions of containers running in a cluster.
+
+For example:
+
+1. **SYS_TIME**:
+   
+   - **Description**: The `SYS_TIME` capability allows a process to change the system clock.
+   - **Implications**: If a container has the `SYS_TIME` capability, it can alter the system time, which can affect time-based security mechanisms (like token expiration) and can disrupt time synchronization across the cluster. Typically, this capability is not required for most applications and should be granted only if absolutely necessary.
+2. **MAC_ADMIN**:
+   
+   - **Description**: The `MAC_ADMIN` capability allows a process to administer Mandatory Access Control (MAC) settings. This includes modifying security policies in systems like SELinux (Security-Enhanced Linux).
+   - **Implications**: Granting `MAC_ADMIN` to a container can have significant security implications, as it could potentially allow the container to change security policies, affecting the overall security posture of the system. This capability should be used with caution and only when there is a clear and justified need.
+
+
+Here's an example of how you might specify capabilities in a Kubernetes Pod spec:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-pod
+spec:
+  containers:
+  - name: example-container
+    image: example-image
+    securityContext:
+      capabilities:
+        add: ["SYS_TIME", "MAC_ADMIN"]
+        drop: ["NET_RAW", "MKNOD"]
+```
+
+In this example, the `example-container` is given the `SYS_TIME` and `MAC_ADMIN` capabilities, while `NET_RAW` and `MKNOD` are dropped.
+
+### Best Practices
+
+- **Minimize Capabilities**: Only add the capabilities that are strictly necessary for your container to function. Dropping all unnecessary capabilities reduces the attack surface.
+- **Least Privilege**: Adhere to the principle of least privilege by granting only the permissions that are needed for the shortest time necessary.
+- **Review Regularly**: Periodically review and audit the capabilities assigned to your containers to ensure they are still required and appropriate.
+
+By carefully managing Linux capabilities in your Kubernetes clusters, you can significantly enhance the security of your applications and infrastructure.
+
 - Similar to Docker containers, Kubernetes pods allow you to define security configurations for processes running within them such as the ID of the user used to run the container, the Linux capabilities that can be added or removed from the container etc.
 - There are two ways to configure security context in Kubernetes pods:
   
@@ -71,7 +116,4 @@
   
   ![cap](../../images/cap.PNG)
 
-### K8s Reference Docs
-
-- https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 
