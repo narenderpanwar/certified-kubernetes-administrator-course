@@ -1,0 +1,102 @@
+pipeline {
+    agent any
+    parameters {
+        choice(name: 'ENV', choices: ['non-prod'], description: 'Choose Environment Name')
+        string(name: 'BRANCH', defaultValue: 'master', description: 'Git Branch Name')
+    }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
+        timestamps()
+    }
+    environment {
+        DEFAULT_ENV = "non-prod"
+        DEFAULT_BRANCH = "main"
+        GIT_URL = "git@gitlab.intelligrape.net:devops-contribution/solutions.git"
+        GIT_PATH = "aws/inventory-sheet"
+
+        REGION_NAME = "us-east-1"
+        REPOSITORY_NUMBER = "999999999999"
+        PROJECT_NAME = "Generic"
+        SNS_TOPIC_NAME = "non-prod-generic-infra-alert"
+        S3_BUCKET_NAME = "non-prod-generic-config"
+        S3_BUCKET_PATH = "aws-inventory-sheet/inputs.yml"
+    }
+    triggers {
+        cron('H 9 * * *')
+    }
+    stages {
+        stage("Setting Build") {
+            steps {
+                wrap([$class: 'BuildUser']) {
+                    script {
+                        def changeLogSets = currentBuild.changeSets
+                        currentBuild.displayName = "#${params.ENV}-#${params.BRANCH}-#${currentBuild.number}"
+                        currentBuild.description = "Build By: ${env.BUILD_USER}"
+                    }
+                }
+            }
+        }
+        stage('Cleaning the Workspace') {
+            steps {
+                step([$class: 'WsCleanup'])
+            }
+        }
+        stage('Pulling the Repository') {
+            steps {
+                echo "Branch: ${params.BRANCH}"
+                echo "Environment: ${params.ENV}"
+                script {
+                    def BRANCH_NAME = ""
+                    if (params.BRANCH == null || params.BRANCH.equals("null")) {
+                        BRANCH_NAME = "${env.DEFAULT_BRANCH}"
+                    } else {
+                        BRANCH_NAME = "${params.BRANCH}"
+                    }
+                    git branch: "${BRANCH_NAME}", url: "${env.GIT_URL}", changelog: true, poll: true
+                }
+            }
+        }
+        stage('Download Artifacts from S3') {
+            steps {
+                script {
+                    sh """#!/bin/bash
+                        set -xe
+                        aws s3 cp s3://${env.S3_BUCKET_NAME}/${env.S3_BUCKET_PATH} ./ --region ${env.REGION_NAME}
+                    """
+                }
+            }
+        }
+        stage('Execute Python Script') {
+            steps {
+                script {
+                    sh """#!/bin/bash
+                        set -xe
+                        python3.8 -m venv .venv
+                        source .venv/bin/activate
+                        python --version
+                        python -m pip install --upgrade pip
+                        python -m pip --version
+                        python -m pip install -r requirements.txt
+
+                        python main.py
+
+                        echo "Job Completed Successfully"
+                    """
+                }
+            }
+        }
+    }
+    post {
+        failure {
+            script {
+                def deployment_details = "AWS Resource Alert"
+                sh """#!/bin/bash
+                    echo "Hi, Jenkins deployment failed for ${deployment_details} having build number ${env.BUILD_NUMBER}" > message.txt
+                    aws sns publish --topic-arn "arn:aws:sns:${env.REGION_NAME}:${env.REPOSITORY_NUMBER}:${env.SNS_TOPIC_NAME}" \
+                    --message file://message.txt --subject "${env.PROJECT_NAME} | ${params.ENV} | ERROR - Jenkins Deployment Failed" \
+                  --region ${env.REGION_NAME}
+                """
+            }
+        }
+    }
+}
