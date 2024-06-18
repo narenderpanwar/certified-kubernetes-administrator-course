@@ -1,0 +1,28 @@
+AWS ECS WITH CAPACITY PROVIDERS:
+
+1)Optimizing Resource Utilization:
+
+Use Case: Imagine you have a containerized application with varying resource requirements. With ECS capacity providers, you can define different capacity providers based on instance types and allocate tasks to them. This helps optimize resource utilization by matching tasks with the most suitable capacity provider, considering CPU and memory requirements.
+
+2)Elastic Scaling:
+
+Use Case: During peak loads, ECS can dynamically adjust the number of tasks across capacity providers, adding or removing tasks based on demand. This elasticity ensures that your application scales efficiently with varying workloads.
+
+3)Spot Instances and On-Demand Instances:
+
+Use Case: You might want to take advantage of cost savings with spot instances for non-critical workloads and use on-demand instances for more reliable performance. Capacity providers in ECS allow you to easily integrate spot instances into your cluster and balance the workload between different instance types.
+
+
+AWS EKS WITHOUT EXPLICIT CAPACITY PROVIDERS:
+
+1)Kubernetes Node Pools and Auto-Scaling:
+
+Use Case: In EKS, Kubernetes manages node groups, which are equivalent to ECS capacity providers in terms of hosting containers. EKS simplifies this by using node pools and AWS Auto Scaling groups. You define node pools with specific instance types and configure auto-scaling policies to adjust the number of nodes based on workload.
+
+2)Pod Scheduling Strategies:
+
+Use Case: Kubernetes has its own scheduling strategies and affinity rules. You can define resource constraints and affinity/anti-affinity rules in your pod specifications to guide Kubernetes in placing pods on nodes that meet specific criteria. This allows you to control where your workloads are deployed within the EKS cluster.
+
+3)Horizontal Pod Autoscaling:
+
+Use Case: Kubernetes provides Horizontal Pod Autoscaling (HPA) that automatically adjusts the number of pods in a deployment or replica set based on observed CPU or memory utilization. This native Kubernetes feature handles scaling at the application level, without the need for explicit capacity providers.
