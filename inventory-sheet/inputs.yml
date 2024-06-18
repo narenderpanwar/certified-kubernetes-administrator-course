@@ -42,8 +42,7 @@ Email:
     password: ""
     from: ""
     to:
-      - "prashant.gupta@tothenew.com"
+      - "narender.panwar@tothenew.com"
     cc:
-      - "kishan.panwar@tothenew.com"
       - "narender.panwar@tothenew.com"
 
